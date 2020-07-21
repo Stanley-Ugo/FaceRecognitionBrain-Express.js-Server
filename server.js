@@ -14,7 +14,7 @@ const postgres = knex({
   }
 });
 
-
+console.log(postgres.select('*').from('users'));
 
 const app = express();
 
