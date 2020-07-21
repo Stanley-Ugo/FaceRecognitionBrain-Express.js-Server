@@ -2,6 +2,19 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt-nodejs");
 const cors = require('cors');
+const knex = require('knex');
+
+const postgres = knex({
+  client: 'pg',
+  connection: {
+    host: '127.0.0.1',
+    user: 'postgres',
+    password: 'scott4wheels',
+    database: 'smart-brain'
+  }
+});
+
+
 
 const app = express();
 
@@ -41,13 +54,13 @@ app.get("/", (req, res) => {
 });
 
 app.post("/signin", (req, res) => {
-  bcrypt.hash("bacon", null, null, function (err, hash) {
-    //store hash in your password DB
-  });
+  // bcrypt.hash("bacon", null, null, function (err, hash) {
+  //   //store hash in your password DB
+  // });
 
-  bcrypt.compare("veggies", hash, function (err, res) {
-    //res == false
-  });
+  // bcrypt.compare("veggies", hash, function (err, res) {
+  //   //res == false
+  // });
 
   if (
     req.body.email === database.users[0].email &&
@@ -66,7 +79,6 @@ app.post("/register", (req, res) => {
     id: "125",
     name: name,
     email: email,
-    password: password,
     entries: 0,
     joined: new Date(),
   });
@@ -87,7 +99,7 @@ app.get("/profile/:id", (req, res) => {
   }
 });
 
-app.post("/image", (req, res) => {
+app.put("/image", (req, res) => {
   const { id } = req.body;
   let found = false;
   database.users.forEach((user) => {
